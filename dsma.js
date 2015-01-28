@@ -64,4 +64,15 @@ firstStringInSecond = function (string1, string2) {
 
 };
 
+//all we need to do is check if half of the word is the other half reversed. if it's an odd number of characters, just ignore the middle char by using Math.floor to round down when we divide the word in half.
+isPalindrome = function(word) {
+  var halfsies = Math.floor(word.length/2);
+  var firstHalf = word.slice(0, halfsies);
+  var secondHalf = word.slice(halfsies);
 
+  //if word has odd length
+  if (word.length % 2 === 1) {
+    secondHalf = word.slice(halfsies+1);
+  }
+  return firstHalf === secondHalf.split('').reverse().join('');
+};
