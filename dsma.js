@@ -30,8 +30,38 @@ swapTwoWords2 = function (twoWords) {
   twoWords.replace(/^(.*)\s+(\w+)$/, "$2, $1");
 };
 
-/*
-rollyString = function (stringA, stringB) {
+firstStringInSecond = function (string1, string2) {
+  if (string2.indexOf(string1) !== -1) {
+    return true;
+  }
+  //we need to handle circular variations of string 2
+  var indices = [];
+  //start at first char of string1
+  var startChar = string1[0];
+  //start index2 at where we first see startChar in string2
+  var indexToAdd = string2.indexOf(startChar);
+
+  while (indexToAdd != -1) {
+    indices.push(indexToAdd);
+    //2nd arg of indexOf let's us check for elements starting at a specific index. We don't want to check the index we just retrieved twice, so start at the next character.
+    indexToAdd = string2.indexOf(startChar, indexToAdd + 1);
+  }
+
+  for (var j = 0; j < indices.length; j++) {
+    var index2 = indices[j];
+
+    for (var i = 0; i < string1.length; i++) {
+      //we want to check every char of string1 against possible matching sequences of chars in string2
+      if (string1[i] !== string2[index2 % string2.length]) {
+        break;
+      }
+      index2++;
+    }
+    return true;
+  }
+  //if the program's gotten this far, it means that there were no matches, and all possible starting indices have been exhausted. :O
+  return false;
 
 };
-*/
+
+
