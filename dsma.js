@@ -27,7 +27,7 @@ swapTwoWords = function (twoWords) {
   http://stackoverflow.com/questions/8688878/extracting-words-in-sentence-with-regex?rq=1
 */
 swapTwoWords2 = function (twoWords) {
-  twoWords.replace(/^(.*)\s+(\w+)$/, "$2, $1");
+  return twoWords.replace(/^(.*)\s+(\w+)$/, "$2, $1");
 };
 
 firstStringInSecond = function (string1, string2) {
@@ -75,4 +75,32 @@ isPalindrome = function(word) {
     secondHalf = word.slice(halfsies+1);
   }
   return firstHalf === secondHalf.split('').reverse().join('');
+};
+
+//helper range() function for anyPalindromes
+range = function(start, end) {
+  result = [];
+  for (var i = start; i <= end; i++) {
+    result.push(i);
+  }
+  return result;
+};
+
+//check for the existence of ANY palindrome in a word.
+//check for palindromes of 2 chars length until length of word.
+anyPalindromes = function(word) {
+  //generate an array of numbers starting from 2 (smallest "valid" chars to form palindrome) up to length of the word.
+  var palinLengths = range(2,word.length);
+
+  for (var i = 0; i < palinLengths.length; i ++) {
+    //check for palindromes of length palinLengths[i] starting from start of word (0) to last "valid" starting point of palindrome in word (aka word.length - word.length)
+    var lastValidIdx = word.length - palinLengths[i];
+
+    for (var j = 0; j <= lastValidIdx; j++) {
+      if (isPalindrome(word.slice(j,j+palinLengths[i]))) {
+        return true;
+      }
+    }
+  }
+  return false;
 };
